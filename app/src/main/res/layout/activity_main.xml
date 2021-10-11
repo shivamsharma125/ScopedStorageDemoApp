@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+
+    <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/nested_scroll"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/white"
+        android:fillViewport="true">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/open_file_pdf_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Pick a PDF"
+                android:textAllCaps="true" />
+
+            <Button
+                android:id="@+id/open_file_image_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Pick an Image"
+                android:textAllCaps="true" />
+
+            <Button
+                android:id="@+id/open_file_doc_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Pick a doc"
+                android:textAllCaps="true" />
+
+            <Button
+                android:id="@+id/download_image_download_bt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/download_image_url_to_downloads"
+                android:textAllCaps="true" />
+
+            <Button
+                android:id="@+id/save_image_external_storage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Save image to external storage"
+                android:textAllCaps="true" />
+
+            <Button
+                android:id="@+id/bt_fetch_gallery_images"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Fetch all gallery Images"
+                android:textAllCaps="true"
+                android:visibility="visible" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+
+</layout>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">ScopedStorageDemoApp</string>
+    <string name="file_operations_demo">File Operations Demo</string>
+    <string name="create_a_dummy_file">Create a Dummy File</string>
+    <string name="open_files">Open files</string>
+    <string name="open_folder">Open Folder</string>
+    <string name="download_image_to_app_folder">Download Image to App Folder</string>
+    <string name="download_image_url_to_downloads">Download Image from Url to Downloads</string>
+    <string name="download_successful">Image Download successful to: </string>
+</resources>
