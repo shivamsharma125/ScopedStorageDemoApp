@@ -81,6 +81,18 @@
                 android:textAllCaps="true"
                 android:visibility="visible" />
 
+            <Button
+                android:id="@+id/bt_fetch_compress_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:background="@android:color/holo_blue_bright"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="Fetch and Compress Image"
+                android:textAllCaps="true"
+                android:visibility="visible" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
     </androidx.core.widget.NestedScrollView>
 

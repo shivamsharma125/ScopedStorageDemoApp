@@ -5,6 +5,7 @@ import android.app.DownloadManager
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import android.os.Build
@@ -20,6 +21,7 @@ import com.learner.scopedstoragedemoapp.databinding.ActivityMainBinding
 import java.io.*
 
 const val OPEN_FILE_REQUEST_CODE = 2001
+const val PICK_IMAGE_TO_COMPRESS_REQUEST_CODE = 2002
 const val CHOOSE_FILE = 2003
 const val READ_EXTERNAL_STORAGE_PERMISSION = 2004
 const val CREATE_FILE_REQUEST_CODE = 2005
@@ -69,10 +71,15 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, BrowseAlbum::class.java)
             startActivity(intent)
         }
+
+        mContentViewBinding.btFetchCompressImage.setOnClickListener {
+            pickImageFileForCompress()
+        }
     }
 
     private fun saveImageToStorage(
         bitmap: Bitmap,
+        isToShowToast: Boolean = true,
         filename: String = "screenshot.jpg",
         mimeType: String = "image/jpeg",
         directory: String = Environment.DIRECTORY_PICTURES,
@@ -98,7 +105,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         imageOutStream.use { bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it) }
-        Toast.makeText(this, "Image saved successfully", Toast.LENGTH_LONG).show()
+        if (isToShowToast)
+            Toast.makeText(this, "Image saved successfully", Toast.LENGTH_LONG).show()
     }
 
     private fun createFile() {
@@ -297,6 +305,14 @@ class MainActivity : AppCompatActivity() {
         startActivityForResult(intent, OPEN_FILE_REQUEST_CODE)
     }
 
+    private fun pickImageFileForCompress() {
+        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+            type = "image/*"
+            addCategory(Intent.CATEGORY_OPENABLE)
+        }
+        startActivityForResult(intent, PICK_IMAGE_TO_COMPRESS_REQUEST_CODE)
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -308,6 +324,30 @@ class MainActivity : AppCompatActivity() {
                         Intent.FLAG_GRANT_READ_URI_PERMISSION
                     )
                     Toast.makeText(this, documentUri.path.toString(), Toast.LENGTH_LONG).show()
+                }
+            } else if (requestCode == PICK_IMAGE_TO_COMPRESS_REQUEST_CODE) {
+                data?.data?.also { documentUri ->
+                    //Permission needed if you want to retain access even after reboot
+                    contentResolver.takePersistableUriPermission(
+                        documentUri,
+                        Intent.FLAG_GRANT_READ_URI_PERMISSION
+                    )
+
+                    val inputStream = contentResolver.openInputStream(documentUri)
+
+                    var bitmap = if(Build.VERSION.SDK_INT < 28) {
+                        MediaStore.Images.Media.getBitmap(contentResolver, documentUri)
+                    } else {
+                        val source = ImageDecoder.createSource(contentResolver, documentUri)
+                        ImageDecoder.decodeBitmap(source)
+                    }
+
+                    bitmap?.let {
+                        bitmap = Bitmap.createScaledBitmap(it, 100, 100, true)
+
+                        saveImageToStorage(it, false)
+                        Toast.makeText(this, "Compressed image is stored to external storage", Toast.LENGTH_LONG).show()
+                    }
                 }
             } else if (requestCode == CHOOSE_FILE)
             else if (requestCode == CREATE_FILE_REQUEST_CODE) {
