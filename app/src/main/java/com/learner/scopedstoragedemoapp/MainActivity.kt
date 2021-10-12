@@ -5,6 +5,7 @@ import android.app.DownloadManager
 import android.content.*
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
@@ -334,6 +335,8 @@ class MainActivity : AppCompatActivity() {
                     )
 
                     val inputStream = contentResolver.openInputStream(documentUri)
+
+                    val newBitmap = BitmapFactory.decodeStream(inputStream)
 
                     var bitmap = if(Build.VERSION.SDK_INT < 28) {
                         MediaStore.Images.Media.getBitmap(contentResolver, documentUri)
